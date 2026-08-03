@@ -21,3 +21,11 @@ export interface BookSaleType {
   oldPrice: string;
   discont: string;
 }
+export interface BookGridType {
+  id: string;
+  imageUrl: string;
+  title: string;
+  categories: string[];
+  price?: number;
+  oldPrice?: number;
+}

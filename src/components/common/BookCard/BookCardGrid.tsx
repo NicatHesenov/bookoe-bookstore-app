@@ -1,79 +1,118 @@
 import {
-  Badge,
   Box,
-  Button,
   Card,
-  HStack,
   Image,
-  RatingGroup,
   Text,
+  RatingGroup,
+  IconButton,
+  VStack,
+  HStack,
+  Button,
 } from "@chakra-ui/react";
-import Book from "../../../assets/images/book.jpeg";
+import type { BookGridType } from "../../../types/types";
+import { BiHeart, BiSolidHeartSquare } from "react-icons/bi";
+import { useState } from "react";
 import { SlBasket } from "react-icons/sl";
 
-function BookCardOffer() {
-  const data = {
-    imageUrl: Book,
-    imageAlt: "SECONDS [Part I]",
-    beds: 3,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
-    catagory: ["BIOGRAPHY", "THRILLER", "HORROR"],
-    title: "Kevin Smiley",
-    rating: 4.5,
-    price: "$435",
-    oldPrice: 34,
-    discont: "20%",
-  };
+interface BookCardGridProps {
+  data: BookGridType;
+}
+
+function BookCardGrid({ data }: BookCardGridProps) {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isHovered, setisHovered] = useState(false);
+  if (!data) return null;
+
   return (
-    <Card.Root maxW="sm" overflow="hidden">
-      <Box>
-        <Image src={data.imageUrl} alt={data.imageAlt} objectFit="cover" />
-      </Box>
-      <Card.Body gap="3" p="4">
-        <Card.Title>{data.imageAlt}</Card.Title>
-        <HStack gap="2" wrap="wrap">
-          {data.catagory.map((catagory, i) => (
-            <Badge
-              key={i}
-              px="2"
-              py="1"
-              borderRadius="md"
-              bgColor="PrimarySoft"
-              color="Primary"
-              fontSize="xs"
-            >
-              {catagory}
-            </Badge>
-          ))}
-        </HStack>
-        <Card.Description>{data.description}</Card.Description>
-        <RatingGroup.Root count={5} defaultValue={4} colorPalette="orange">
-          <RatingGroup.HiddenInput />
-          <RatingGroup.Control />
-        </RatingGroup.Root>
-        <HStack fontSize="xs" color="gray.500" fontWeight="medium">
-          {data.title}
-        </HStack>
-      </Card.Body>
-      <Card.Footer px="4" justifyContent="space-between" alignItems="center">
-        <Button bgColor="Primary" color="White">
-          <SlBasket />
-          Add to cart
-        </Button>
-        <HStack flexDirection="row" gap="2">
-          <Text color="DarkPurple" fontSize="lg" fontWeight="bold">
-            {data.price}
-          </Text>
-          {data.oldPrice && (
-            <Text color="Grey01" textDecoration="line-through">
-              ${data.oldPrice}
-            </Text>
+    <Card.Root
+      maxW="220px"
+      overflow="hidden"
+      border="none"
+      bg="white"
+      borderRadius="2xl"
+      p="3"
+      transition="all 0.3s ease"
+      onMouseEnter={() => setisHovered(true)}
+      onMouseLeave={() => setisHovered(false)}
+      _hover={{
+        transform: "translateY(-6px)",
+        boxShadow: "1xl",
+      }}
+    >
+      <Box position="relative" borderRadius="2xl" overflow="hidden">
+        <Image
+          src={data.imageUrl}
+          alt={data.title}
+          objectFit="cover"
+          w="100%"
+          h="280px"
+        />
+        <IconButton
+          aria-label="Add to favorites"
+          position="absolute"
+          top="10px"
+          right="10px"
+          size="sm"
+          borderRadius="lg"
+          bg={isFavorite ? "purple.600" : "white"}
+          color={isFavorite ? "white" : "purple.600"}
+          _hover={{ bg: isFavorite ? "purple.600" : "gray.100" }}
+          onClick={() => setIsFavorite(!isFavorite)}
+        >
+          {isFavorite ? (
+            <BiSolidHeartSquare size="18px" />
+          ) : (
+            <BiHeart size="18px" />
           )}
-        </HStack>
-      </Card.Footer>
+        </IconButton>
+      </Box>
+
+      <Card.Body p="0" pt="3" gap="1" alignItems="center">
+        <Card.Title fontSize="sm" fontWeight="bold" lineClamp={1}>
+          {data.title}
+        </Card.Title>
+
+        {isHovered ? (
+          <VStack wordSpacing={2} mt={2}>
+            <HStack justifyContent="center" gap={2}>
+              <Text fontSize="md" fontWeight="bold" color="purple.600">
+                ${data.price || "54.78"}
+              </Text>
+              {data.oldPrice && (
+                <Text
+                  fontSize="xs"
+                  color="Gray01"
+                  textDecoration="line-through"
+                >
+                  ${data.oldPrice}
+                </Text>
+              )}
+            </HStack>
+            <Button size="lg" w="100%" colorPalette="purple" borderRadius="xl">
+              <SlBasket /> Add to cart
+            </Button>
+          </VStack>
+        ) : (
+          <VStack wordSpacing={1} mt={1}>
+            <Text color="Primary" fontSize="10px" fontWeight="bold">
+              {Array.isArray(data.categories)
+                ? data.categories.join(", ").toUpperCase()
+                : data.categories}
+            </Text>
+            <RatingGroup.Root
+              count={5}
+              defaultValue={4}
+              size="xs"
+              colorPalette="orange"
+            >
+              <RatingGroup.HiddenInput />
+              <RatingGroup.Control />
+            </RatingGroup.Root>
+          </VStack>
+        )}
+      </Card.Body>
     </Card.Root>
   );
 }
 
-export default BookCardOffer;
+export default BookCardGrid;

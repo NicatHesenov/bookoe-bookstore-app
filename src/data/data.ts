@@ -2,6 +2,7 @@ import BookOffer from "../assets/images/BookCardOffer/bookOffer.png";
 import type { BookOfferType } from "../types/types";
 import BookSale from "../assets/images/BookCardSale/BookSale.png";
 import type { BookSaleType } from "../types/types";
+import type { BookGridType } from "../types/types";
 export const mockOfferBooks: BookOfferType[] = [
   {
     id: "1",
@@ -27,5 +28,15 @@ export const mockSaleBooks: BookSaleType[] = [
     price: "$45.4",
     oldPrice: "$98.4",
     discont: "50%",
+  },
+];
+export const mockGridBooks: BookGridType[] = [
+  {
+    id: "1",
+    imageUrl: BookSale,
+    title: "Thunder Stunt",
+    categories: ["adventure", "survival", "comedy"],
+    price: 4.7,
+    oldPrice: 50,
   },
 ];
