@@ -1,6 +1,8 @@
 import { Container } from "@chakra-ui/react";
-import BookCardGrid from "./BookCardGrid";
-import { mockGridBooks } from "../../../data/data";
+import BookCardList from "./BookCardList";
+import { mockListBooks } from "../../../data/data";
+// import BookCardGrid from "./BookCardGrid";
+// import { mockGridBooks } from "../../../data/data";
 // import BookCard from "../components/common/BookCard/BookCard";
 // import BookCardOffer from "../components/common/BookCard/BookCardOffer";
 // import { mockOfferBooks } from "../data/data";
@@ -14,7 +16,8 @@ function BookCard() {
       <Test /> */}
       {/* <BookCardOffer data={mockOfferBooks[0]} /> */}
       {/* <BookCardSale data={mockSaleBooks[0]} /> */}
-      <BookCardGrid data={mockGridBooks[0]} />
+      {/* <BookCardGrid data={mockGridBooks[0]} /> */}
+      <BookCardList data={mockListBooks[0]} />
     </Container>
   );
 }

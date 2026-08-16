@@ -29,3 +29,18 @@ export interface BookGridType {
   price?: number;
   oldPrice?: number;
 }
+export interface BookListType {
+  id: string;
+  imageUrl: string;
+  title: string;
+  categories: string[];
+  rating: string;
+  reviewsCount: string;
+  description: string;
+  price?: number;
+  oldPrice?: number;
+  promos?: string[];
+  author: string;
+  publisher: string;
+  year: number;
+}
